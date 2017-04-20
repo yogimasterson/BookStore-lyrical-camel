@@ -1,9 +1,16 @@
-var express = require('express');
-var router = express.Router();
+'use strict'
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('art/index', { title: 'Lyrical-Camel Gallery' });
-});
+const express = require('express')
+const router = express.Router()
+const database = require('../server/database')
 
-module.exports = router;
+router.get('/', (request, response) =>  {
+  let page = parseInt(request.query.page, 10)
+  if (isNaN(page) || page < 1) page = 1
+  const searchOptions = {
+    search_query: request.query.search_query,
+    page: page
+  }
+})
+
+module.exports = router
