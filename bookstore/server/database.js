@@ -17,7 +17,7 @@ const getArtworkById = function(artworkId){
   return db.one("select * from artwork where artwork.id=$1", [artworkId])
 }
 
-const getAllArtworks = function(id){
+const getAllArtwork = function(id){
   return db.any("select * from artwork");
 }
 
@@ -25,12 +25,12 @@ const getAllGenres = function(id){
   return db.any("select * from genre");
 }
 
-const getAllArtists = function (id){
+const getAllArtist = function (id){
   return db.any("select * from artist")
 }
 
-const getAllArtworksWithArtists = function() {
-  return getAllArtworks().then(function(artwork){
+const getAllArtworkWithArtist = function() {
+  return getAllArtwork().then(function(artwork){
     console.log('GOT ARTWORK', artwork)
     const artworkIds = artwork.map(artwork => artwork.id)
     const sql = `
@@ -48,7 +48,7 @@ const getAllArtworksWithArtists = function() {
     `;
     console.log('artworkIds', artworkIds)
     return db.any(sql, [artworkIds]
-      .then(function(artists) {
+      .then(function(artist) {
         artwork.forEach(artwork => {
           console.log('ARTWORK', artwork)
           artwork.artist = artist.filter(artist => artist.artwork_id === artwork.id);
@@ -58,9 +58,9 @@ const getAllArtworksWithArtists = function() {
       .catch(function(error){
         console.error(error)
         throw error;
-      })
-  })
-}
+      }))
+    })
+  }
 
 const createArtist = function(attributes){
   const sql = `
@@ -107,7 +107,7 @@ const createArtwork = function(attributes){
       var artwork = artist.shift()
       return Promise.all([
         associateArtistWithArtwork(artwork.id, artist.map(a => a.id)),
-        associateGenresWithArtwork(artwork.id, attributes.genre),
+        associateGenreWithArtwork(artwork.id, attributes.genre),
       ]).then(function(){
         return artwork;
       })
@@ -127,20 +127,20 @@ const associateArtistWithArtwork = function(artworkId, artistIds){
   return Promise.all(queries)
 }
 
-const associateGenresWithArtwork = function(genre_id, artwork.id){
-  const queries = genre_id.map(genre_id => {
+const associateGenreWithArtwork = function(artworkId, genreIds){
+  const queries = genreIds.map(genreId => {
     let sql = `
       INSERT INTO
         artwork (genre_id, artwork.id)
       VALUES
         ($1, $2)
     `
-    return db.none(sql, [genre_id, artwork.id])
+    return db.none(sql, [genreId, artworkId])
   })
   return Promise.all(queries)
 }
 
-const getArtistByArtworkId = function(artwork.id){
+const getArtistByArtworkId = function(artworkId){
   const sql = `
     SELECT
       artist.*
@@ -153,10 +153,10 @@ const getArtistByArtworkId = function(artwork.id){
     WHERE
       artwork.id=$1
   `
-  return db.any(sql, [artwork.id])
+  return db.any(sql, [artworkId])
 }
 
-const getGenresByArtworkId = function(artwork.id){
+const getGenresByArtworkId = function(artworkId){
   const sql = `
     SELECT
       genre.*
@@ -169,10 +169,10 @@ const getGenresByArtworkId = function(artwork.id){
     WHERE
       artwork.id=$1
   `
-  return db.any(sql, [artwork.id])
+  return db.any(sql, [artworkId])
 }
 
-const updateArtworkTitle = function(artwork.id, title){
+const updateArtworkTitle = function(artworkId, title){
   const sql = `
     UPDATE
       artwork
@@ -181,7 +181,7 @@ const updateArtworkTitle = function(artwork.id, title){
     WHERE
       artwork.id=$1
   `
-  db.none(sql, [artwork.id, title])
+  db.none(sql, [artworkId, title])
 }
 
 const findOrCreateArtist = function(attribures){
@@ -193,9 +193,9 @@ const findOrCreateArtist = function(attribures){
     });
 }
 
-const updateArtistForArtwork = function(artwork.id, artist){
+const updateArtistForArtwork = function(artworkId, artist){
   if (typeof artist === 'undefined') return;
-  console.log('updating artits', artwork.id, artist)
+  console.log('updating artits', artworkId, artist)
 
   return db.none('DELETE FROM artwork WHERE id=$1', [artwork.id])
     .then(()=> {
@@ -207,7 +207,7 @@ const updateArtistForArtwork = function(artwork.id, artist){
 
       return Promise.all(findOrCreateArtistQueries).then(artist => {
         console.log('FOUND OR CREATED ARTISTS: ', artist)
-        return associateArtistWithArtwork(artwork.id, artist.map(a => a.id))
+        return associateArtistWithArtwork(artworkId, artist.map(a => a.id))
       })
     })
 }
@@ -220,35 +220,35 @@ const findOrCreateGenre = function(attributes){
     });
 }
 
-const updateGenreForArtwork = function(artwork.id, genre.id){
-  if (typeof genre.id === 'undefined') return
-  console.log('updating genre', artwork.id, genre.id)
+const updateGenreForArtwork = function(artworkId, genreIds){
+  if (typeof genreIds === 'undefined') return
+  console.log('updating genre', artworkId, genreIds)
 
-  return db.none('DELETE FROM genre WHERE genre_id=$1', [artwork.id])
+  return db.none('DELETE FROM genre WHERE genre_id=$1', [artworkId])
     .then(() => {
-      return associateArtistWithArtwork(artwork.id, genre.id)
+      return associateArtistWithArtwork(artworkId, genreIds)
     })
 }
 
-const updateArtwork = function(artwork.id, attributes){
-  console.log('UPDATE ARTWORK', artwork.id, attributes)
+const updateArtwork = function(artworkId, attributes){
+  console.log('UPDATE ARTWORK', artworkId, attributes)
   return Promise.all([
-    updateArtworkTitle(artwork.id, attributes.title),
-    updateArtistForArtwork(artwork.id, attributes.artist),
-    updateGenreForArt(artwork.id, attributes.genre),
+    updateArtworkTitle(artworkId, attributes.title),
+    updateArtistForArtwork(artworkId, attributes.artist),
+    updateGenreForArt(artworkId, attributes.genre),
   ])
 }
 
-const getArtworkWithArtistAndGenreByArtworkId = function(artwork.id){
+const getArtworkWithArtistAndGenreByArtworkId = function(artworkId){
   return Promise.all([
-    getArtworkById(artwork.id),
-    getArtistbyid(artist.id),
-    getGenreById(genre.id)
+    getArtworkById(artworkId),
+    getArtistByArtworkId(artworkId),
+    getGenreByArtworkId(artworkId)
   ])
     .then(function(results){
       const artwork = results[0];
-      artist.name = results[1];
-      genre.genre = results[2];
+      artwork.artist = results[1];
+      artwork.genre = results[2];
       return artwork;
     })
 }
@@ -308,7 +308,7 @@ const searchForArtwork = function(options){
 module.exports = {
   pgp,
   db,
-  getAllArt,
+  getAllArtwork,
   getAllArtist,
   getAllArtworkWithArtist,
   getArtworkWithArtistAndGenreByArtworkId,
@@ -316,7 +316,7 @@ module.exports = {
   createArtwork,
   createArtist,
   getAllGenres,
-  getArtistbyid,
+  getArtistByArtworkId,
   searchForArtwork,
   updateArtwork,
 };

@@ -1,18 +1,18 @@
-DROP TABLE IF EXISTS main_table;
+DROP TABLE IF EXISTS artwork;
 
 CREATE TABLE artwork (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   img_url TEXT NOT NULL,
-  artist_id INTEGER NOT NULL FOREIGN KEY REFERENCES artist_id(id),
-  genre_id INTEGER NOT NULL FOREIGN KEY REFERENCES genre_id(id)
+  artist_id INTEGER NOT NULL,
+  genre_id INTEGER NOT NULL
 );
 
 DROP TABLE IF EXISTS artist;
 
 CREATE TABLE artist (
   id SERIAL PRIMARY KEY,
-  name TEXT
+  name TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS genre;
@@ -22,7 +22,15 @@ CREATE TABLE genre (
   genre TEXT NOT NULL
 );
 
--- Join artwork to artist
+SELECT
+  *
+FROM
+  artwork
+WHERE
+  title
+LIKE
+  '%something%'
+;
 
 SELECT
   *
@@ -30,9 +38,8 @@ FROM
   artwork
 LEFT JOIN
   artist
-ON artist.id = artist_id
-
--- Join artwork to genre
+ON artist.id = artwork.artist_id
+;
 
 SELECT
   *
@@ -40,4 +47,5 @@ FROM
   artwork
 LEFT JOIN
   genre
-  ON genre.id = genre_id
+ON genre.id = artwork.genre_id
+;

@@ -1,5 +1,5 @@
-process.env.NODE_ENV = 'test'
 const expect = require('expect.js')
+process.env.NODE_ENV = 'test'
 const database = require('../server/database')
 
 describe('database', () => {
@@ -10,9 +10,9 @@ describe('database', () => {
 
 describe('getAllArtwork', () => {
   it('should return all artwork', () => {
-    return database.getAllArtwork().then(Artwork => {
+    return database.getAllArtwork().then(artwork => {
       expect(artwork).to.be.a(Array)
-      expect(artwork.length).to.eql(0)
+      expect(artwork.length).to.eql(64)
     })
   })
 })
@@ -20,17 +20,20 @@ describe('getAllArtwork', () => {
 describe('createArtwork', () => {
   it('should insert art piece into the artwork table', () => {
     const attributes = {
-      title: '',
-      artist: [ {first_name: '', last_name: '',
-    }
-        ],
+      artist: [ {name: '',
+        }
+      ],
+      artwork: [ {title: '', img_url: '', } ],
       genre: [],
     }
     return database.createArtwork(attributes).then(artworkId => {
       return database.getArtworkId(artworkId).then(artwork => {
         expect(artwork).to.be.a(object)
+        console.log('is object');
         expect(artwork.id).to.be.a('number')
+        console.log('is number');
         expect(artwork.title).to.eql('')
+        console.log('has title');
       })
     })
   })
