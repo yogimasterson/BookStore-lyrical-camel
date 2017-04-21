@@ -1,4 +1,6 @@
-h1 {{message}}
-h2 {{error.status}}
-pre.
-  \n{{error.stack}}
+extends layout
+
+block content
+  h1= message
+  h2.alert-danger= error.status
+  pre.alert-danger #{error.stack}
