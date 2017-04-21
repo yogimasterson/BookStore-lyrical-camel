@@ -4,17 +4,17 @@ Specifications
 
 Users can
 
---[ ]        Add books into the bookstore system via an admin page (create),
---[ ]        See a list of books on the home page (read)
---[ ]        Edit a book's title, author, or genre (update)
---[ ]        Delete a book from the bookstore (delete)
---[ ]        Search for books by title OR by author OR by genre (read)
---[ ]        View book details on a book detail page (read)
---[ ]    Lists of books are always paginated in groups of 10
---[ ]    Book detail view is linked to from the listing and search pages
---[ ]    Search results are presented in a new page
---[ ]    Appropriate HTTP verbs are used for CRUD actions (for reference, follow the guidelines explained in this article)
---[ ]        GET requests are only used for read actions
+[ ]        Add books into the bookstore system via an admin page (create),
+[ ]        See a list of books on the home page (read)
+[ ]        Edit a book's title, author, or genre (update)
+[ ]        Delete a book from the bookstore (delete)
+[ ]        Search for books by title OR by author OR by genre (read)
+[ ]        View book details on a book detail page (read)
+[ ]    Lists of books are always paginated in groups of 10
+[ ]    Book detail view is linked to from the listing and search pages
+[ ]    Search results are presented in a new page
+[ ]    Appropriate HTTP verbs are used for CRUD actions (for reference, follow the guidelines explained in this article)
+[ ]        GET requests are only used for read actions
 [ ]        POST requests are only used for create actions
 [ ]        PUT or PATCH requests are only used for update actions
 [ ]        DELETE requests are only used for delete actions
