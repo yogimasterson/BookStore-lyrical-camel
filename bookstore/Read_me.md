@@ -1,7 +1,9 @@
 Specifications
 
 [X]    Books have a title, author, and genre
-Users can...
+
+Users can
+
 [ ]        Add books into the bookstore system via an admin page (create)
 [ ]        See a list of books on the home page (read)
 [ ]        Edit a book's title, author, or genre (update)
@@ -21,11 +23,11 @@ Users can...
 [X]    Test suite can be run with the command npm test
 [ ]    All features are added as pull requests
 [X]    All pull requests are approved by at least one other member of the team using GitHub's pull request review feature (so that your teammate's approval is of the PR is documented)
-  [X]  Variables, functions, files, etc. have appropriate and meaningful names.
-  [ ]  Functions are small and serve a single purpose
-  [ ]  Code uses a linter and there are no linting errors.
-  [ ]  Code is well tested and all tests are passing.
-  [X]  The artifact produced is properly licensed, preferably with the MIT license.
+[X]  Variables, functions, files, etc. have appropriate and meaningful names.
+[ ]  Functions are small and serve a single purpose
+[ ]  Code uses a linter and there are no linting errors.
+[ ]  Code is well tested and all tests are passing.
+[X]  The artifact produced is properly licensed, preferably with the MIT license.
 
 Stretch
 
