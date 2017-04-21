@@ -137,17 +137,17 @@ VALUES
   ('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/a3e29836106279.570f5c0c53838.jpg');
 
 INSERT INTO
-  artist(first_name, last_name)
+  artist(name)
 
 VALUES
-  ('Henri', 'Matisse'),
-  ('MC','Escher'),
-  ('BANKSY',NULL),
-  ('IROT', NULL),
-  ('Jed','Henry'),
-  ('Kris','Kehasukjaren'),
-  ('Janelle','Barone'),
-  ('Jed','Punongbayan');
+  ('Henri Matisse'),
+  ('MC Escher'),
+  ('BANKSY'),
+  ('IROT'),
+  ('Jed Henry'),
+  ('Kris Kehasukjaren'),
+  ('Janelle Barone'),
+  ('Jed Punongbayan');
 
 INSERT INTO
   genre(genre)

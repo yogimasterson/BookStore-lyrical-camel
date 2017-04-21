@@ -12,8 +12,7 @@ DROP TABLE IF EXISTS artist;
 
 CREATE TABLE artist (
   id SERIAL PRIMARY KEY,
-  first_name TEXT,
-  last_name TEXT
+  name TEXT
 );
 
 DROP TABLE IF EXISTS genre;
