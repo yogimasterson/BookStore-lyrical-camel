@@ -4,7 +4,7 @@ Specifications
 
 Users can
 
-[ ]        Add books into the bookstore system via an admin page (create)
+[ ]        Add books into the bookstore system via an admin page (create),
 [ ]        See a list of books on the home page (read)
 [ ]        Edit a book's title, author, or genre (update)
 [ ]        Delete a book from the bookstore (delete)
